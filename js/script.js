@@ -1,6 +1,7 @@
 const cartContainer = document.querySelector('#cart-container');
 const modalContainer = document.getElementById('modal-container');
-const sideBarContainer = document.getElementById('sidebar-container')
+const sideBarContainer = document.getElementById('sidebar-container');
+const badge = document.querySelector('#badges');
 const phoneData = async()=>{
     const res = await fetch('../data.json');
     const data = await res.json();
@@ -56,7 +57,9 @@ const modalDetails =async (id) =>{
     `
 
 }
+let sum = 0;
 const sideBarItem = async (id)=>{
+    sum++;
     const phones = await phoneData();
     const product = phones.find(element => element.id === id)
     console.log(product);
@@ -71,5 +74,6 @@ const sideBarItem = async (id)=>{
     <span class="font-semibold text-xl">${price}</span>
     `;
     sideBarContainer.appendChild(li);
+    badge.innerText = sum;
 }
 // modalDetails ()
