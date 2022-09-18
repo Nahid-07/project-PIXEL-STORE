@@ -1,5 +1,6 @@
-const cartContainer = document.querySelector('#cart-container')
-const modalContainer = document.getElementById('modal-container')
+const cartContainer = document.querySelector('#cart-container');
+const modalContainer = document.getElementById('modal-container');
+const sideBarContainer = document.getElementById('sidebar-container')
 const phoneData = async()=>{
     const res = await fetch('../data.json');
     const data = await res.json();
@@ -28,7 +29,7 @@ const phoneDetils =async ()=>{
           </div>
           <p><span class="font-semibold text-xl">Price :</span> <span class="font-semibold text-xl">$${price}</span></p>
           <div class="card-actions justify-between">
-            <button class="btn btn-outline btn-primary">Buy now</button>
+            <button onclick = "sideBarItem('${id}')" class="btn btn-outline btn-primary">Buy now</button>
             <label onclick="modalDetails('${id}')" for="my-modal-3" class="btn btn-outline btn-secondary">See details</label>
           </div>
         </div>
@@ -54,5 +55,21 @@ const modalDetails =async (id) =>{
   </div>
     `
 
+}
+const sideBarItem = async (id)=>{
+    const phones = await phoneData();
+    const product = phones.find(element => element.id === id)
+    console.log(product);
+    const {img, name , price} = product
+    const li = document.createElement('li');
+    li.classList.add('flex', 'justify-between', 'items-center', 'bg-slate-400', 'p-2', 'rounded-lg', 'text-white',
+    'mb-2')
+    li.innerHTML =` 
+    <img class="w-16" src="${img}" alt="">
+    <span class="text-lg font-semibold">${name}</span>
+    <span class="border p-2">1</span>
+    <span class="font-semibold text-xl">${price}</span>
+    `;
+    sideBarContainer.appendChild(li);
 }
 // modalDetails ()
